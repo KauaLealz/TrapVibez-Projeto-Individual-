@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrapVibeZ | Quiz</title>
+    <link rel="stylesheet" href="../css/trapvibez.css">
+    <link rel="icon" href="../assets/logo.png">
+
+</head>
+
+<body id="bodyPerguntas">
+
+    <div class="quizAll" id="quizAll">
+
+        <div class="progress-bar">
+            <div class="progress-fill"></div>
+        </div>
+
+        <div class="quizIn" id="quizIn">
+            <h4>Pronto?</h4>
+        </div>
+
+    </div>
+
+    </div>
+
+
+</body>
+
+</html>
+
+<script>
+
+var posicao = 0
+
+function proximaPergunta(){
+    var listaPerguntas =[
+    `
+    <div class="perguntasquiz" id="perguntasquiz">
+    <div class="perguntas">
+        <h3>Quem é o homem mais lindo do mundo?</h3>
+    </div>
+    <div class="alternativas">
+        <button class  ="alternativastxt" id="certo" onclick = "acerto()">Eu</button>
+        <button class = "alternativastxt" id="errado1" onclick = "errado1()">Kauã</button>
+        <button class = "alternativastxt" id="errado2" onclick = "errado2()">Leal</button>
+        <button class = "alternativastxt" id="errado3" onclick = "errado3()">Kauã Leal</button>
+    </div>
+</div>`,
+`
+    <div class="perguntasquiz" id="perguntasquiz">
+    <div class="perguntas">
+        <h3>O que igor guilerme anda pensando?</h3>
+    </div>
+    <div class="alternativas">
+        <button class  ="alternativastxt" id="certo" onclick = "acerto()">?</button>
+        <button class = "alternativastxt" id="errado1" onclick = "errado1()">?</button>
+        <button class = "alternativastxt" id="errado2" onclick = "errado2()">?</button>
+        <button class = "alternativastxt" id="errado3" onclick = "errado3()">?</button>
+    </div>
+</div>`,
+`
+    <div class="perguntasquiz" id="perguntasquiz">
+    <div class="perguntas">
+        <h3>O que igor guilerme anda pensando?</h3>
+    </div>
+    <div class="alternativas">
+        <button class  ="alternativastxt" id="certo" onclick = "acerto()">?</button>
+        <button class = "alternativastxt" id="errado1" onclick = "errado1()">?</button>
+        <button class = "alternativastxt" id="errado2" onclick = "errado2()">?</button>
+        <button class = "alternativastxt" id="errado3" onclick = "errado3()">?</button>
+    </div>
+</div>`,
+`
+    <div class="perguntasquiz" id="perguntasquiz">
+    <div class="perguntas">
+        <h3>O que igor guilerme anda pensando?</h3>
+    </div>
+    <div class="alternativas">
+        <button class  ="alternativastxt" id="certo" onclick = "acerto()">?</button>
+        <button class = "alternativastxt" id="errado1" onclick = "errado1()">?</button>
+        <button class = "alternativastxt" id="errado2" onclick = "errado2()">?</button>
+        <button class = "alternativastxt" id="errado3" onclick = "errado3()">?</button>
+    </div>
+</div>`,
+`
+    <div class="perguntasquiz" id="perguntasquiz">
+    <div class="perguntas">
+        <h3>O que igor guilerme anda pensando?</h3>
+    </div>
+    <div class="alternativas">
+        <button class  ="alternativastxt" id="certo" onclick = "acerto()">?</button>
+        <button class = "alternativastxt" id="errado1" onclick = "errado1()">?</button>
+        <button class = "alternativastxt" id="errado2" onclick = "errado2()">?</button>
+        <button class = "alternativastxt" id="errado3" onclick = "errado3()">?</button>
+    </div>
+</div>`,
+`
+    <div class="perguntasquiz" id="perguntasquiz">
+    <div class="perguntas">
+        <h3>O que igor guilerme anda pensando?</h3>
+    </div>
+    <div class="alternativas">
+        <button class  ="alternativastxt" id="certo" onclick = "acerto()">?</button>
+        <button class = "alternativastxt" id="errado1" onclick = "errado1()">?</button>
+        <button class = "alternativastxt" id="errado2" onclick = "errado2()">?</button>
+        <button class = "alternativastxt" id="errado3" onclick = "errado3()">?</button>
+    </div>
+</div>`,
+`
+    <div class="perguntasquiz" id="perguntasquiz">
+    <div class="perguntas">
+        <h3>O que igor guilerme anda pensando?</h3>
+    </div>
+    <div class="alternativas">
+        <button class  ="alternativastxt" id="certo" onclick = "acerto()">?</button>
+        <button class = "alternativastxt" id="errado1" onclick = "errado1()">?</button>
+        <button class = "alternativastxt" id="errado2" onclick = "errado2()">?</button>
+        <button class = "alternativastxt" id="errado3" onclick = "errado3()">?</button>
+    </div>
+</div>`,
+`
+    <div class="perguntasquiz" id="perguntasquiz">
+    <div class="perguntas">
+        <h3>O que igor guilerme anda pensando?</h3>
+    </div>
+    <div class="alternativas">
+        <button class  ="alternativastxt" id="certo" onclick = "acerto()">?</button>
+        <button class = "alternativastxt" id="errado1" onclick = "errado1()">?</button>
+        <button class = "alternativastxt" id="errado2" onclick = "errado2()">?</button>
+        <button class = "alternativastxt" id="errado3" onclick = "errado3()">?</button>
+    </div>
+</div>`,
+`
+    <div class="perguntasquiz" id="perguntasquiz">
+    <div class="perguntas">
+        <h3>O que igor guilerme anda pensando?</h3>
+    </div>
+    <div class="alternativas">
+        <button class  ="alternativastxt" id="certo" onclick = "acerto()">?</button>
+        <button class = "alternativastxt" id="errado1" onclick = "errado1()">?</button>
+        <button class = "alternativastxt" id="errado2" onclick = "errado2()">?</button>
+        <button class = "alternativastxt" id="errado3" onclick = "errado3()">?</button>
+    </div>
+</div>`
+    ] 
+
+    if(posicao==9){
+        window.location = `contagemPontos.html`
+    }
+
+    quizIn.innerHTML = `${listaPerguntas[posicao]}`
+    posicao++
+
+}
+
+    function acerto() {
+        const certo = document.getElementById('certo')
+        certo.style.backgroundColor = "green";
+proximaPergunta()   
+ }
+
+    function errado1(){
+        const errado1 = document.getElementById('errado1')
+        errado1.style.backgroundColor = "#E60000";
+        proximaPergunta()   
+    }
+
+    function errado2(){
+        const errado2 = document.getElementById('errado2')
+        errado2.style.backgroundColor = "#E60000";
+        proximaPergunta()   
+    }
+
+    function errado3(){
+        const errado3 = document.getElementById('errado3')
+        errado3.style.backgroundColor = "#E60000";
+        proximaPergunta()   
+    }
+
+    function quiz() {
+
+        const totalTime = 30;
+
+        let remainingTime = totalTime;
+
+        const updateInterval = 1000;
+
+        const progressBar = document.querySelector('.progress-fill');
+
+        const intervalId = setInterval(() => {
+
+            remainingTime--;
+
+            const fillWidth = (remainingTime / totalTime) * 100;
+
+            progressBar.style.width = `${fillWidth}%`;
+
+            if (remainingTime <= 0) {
+                clearInterval(intervalId);
+                alert('Tempo esgotado!');
+            }
+        }, updateInterval);
+
+    }
+
+    function perguntas() {
+        quizIn.style.width = `100%`;
+        quizIn.innerHTML = `
+        <div class="perguntasquiz" id="perguntasquiz">
+        <div class="perguntas">
+            <h3>O que igor guilerme anda pensando?</h3>
+        </div>
+        <div class="alternativas">
+            <button class  ="alternativastxt" id="certo" onclick = "acerto()">?</button>
+            <button class = "alternativastxt" id="errado1" onclick = "errado1()">?</button>
+            <button class = "alternativastxt" id="errado2" onclick = "errado2()">?</button>
+            <button class = "alternativastxt" id="errado3" onclick = "errado3()">?</button>
+        </div>
+    </div>`
+    }
+
+    var segundos = 2;
+    var id = setInterval(() => {
+        segundos -= 1;
+        if (segundos <= 0) {
+            clearInterval(id);
+            perguntas()
+            quiz()
+        }
+    }, 1000);
+
+</script>

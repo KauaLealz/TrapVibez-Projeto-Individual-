@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/trapvibez.css">
+    <link rel="icon" href="../assets/logo.png">
+</head>
+<body id="bodyCadastro">
+    
+    
+  <div class="tituloHome">
+    <img src="../assets/letreiro - Copia.png" alt="">
+  </div>
+
+    <div class="containers">
+    <div class="cadastro">
+        <div class="formulario">
+          <h2>Cadastro</h2>
+          <div class="inputs">
+            <h4>Nome:</h4>
+            <input type="text" id="input_user">
+          </div>
+          <div class="inputs">
+            <h4>Email:</h4>
+            <input type="email" id="input_senha">
+          </div>
+          <div class="inputs">
+            <h4>Senha:</h4>
+            <input type="password" id="input_senha">
+          </div>
+          <div class="inputs">
+            <h4>Confirmar Senha:</h4>
+            <input type="password" id="input_senha">
+          </div>
+          <button onclick="validar()">Cadastre-se</button>
+          <p>Já tem uma conta? <a href="login.html">Login</a></p>
+        </div>
+      </div>
+    </div>
+
+</body>
+</html>
+
+<script>
+
+    function redirecionar(){
+        window.location = "login.html"
+    }
+
+    function validar(){
+        redirecionar()
+    }
+
+</script>
