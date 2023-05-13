@@ -13,35 +13,34 @@
 <body>
 
     <div class="header">
+
         <div class="logo">
-            <img src="../assets/letreiro.png" alt="">
+            <a href="login.html"><img src="../assets/letreiro.png" alt=""></a>
         </div>
+
         <div class="nav">
             <a href="home.html">Home</a>
-            <a href="noticias.html">Notícias</a>
-            <a href="#quiz">Quiz</a>
-            <a href="sobremim.html">Sobre Mim</a>
+            <a href="noticias.html" >Notícias</a>
+            <a href="quizhome.html">Quiz</a>
             <a href="historia.html" id="active">História</a>
+            <a href="sobremim.html">Autor</a>
         </div>
-        <div class="searchIcons">
-            <div class="search">
-                <input type="text" name="search" id="search" placeholder="Search">
-                <img src="../assets/loupe.png" alt="">
-            </div>
+
             <div class="icons">
                 <a href="https://open.spotify.com/user/31ugctz6pgp6jfdixccnqrd3ul3i"><img src="../assets/spotify.png"
                         alt=""></a>
                 <a href="https://github.com/KauaLealz/TrapVibez-Projeto-Individual-"><img src="../assets/github.png"
                         alt=""></a>
+                        <a onclick="abrirPerfil()"><img src="../assets/user.png" alt=""></a>
             </div>
-        </div>
     </div>
 
     <h4 class="tituloSM">História do Trap no Brasil</h4>
 
-    <div class="SM">
-        <div>
-            <img src="../assets/raff.jpeg" alt="" class="imgSM">
+    <div class="SMContainer">
+        <div class="SM">
+            <div class="imgsSM">
+                <img src="../assets/raff.jpeg" alt="" class="imgSM">
             <img src="../assets/tue.jpg" alt="" class="imgSM">
         </div>
 
@@ -52,18 +51,36 @@
                 com artistas como Gucci Mane, Migos e Future como referências. Mas aos poucos, os artistas brasileiros
                 começaram a adicionar elementos de funk, música eletrônica e outros ritmos nacionais ao som do trap,
                 criando um som único e característico.</p>
-            <p>Um dos primeiros artistas de trap brasileiro a ganhar destaque foi o MC Bin Laden, que em 2014 lançou a
-                música "Bololo Haha", que se tornou um hit na internet e foi um dos primeiros exemplos de trap
-                brasileiro a ganhar visibilidade nacional. Outros artistas como MC Brinquedo, MC Livinho, MC Kevinho e
-                MC Lan também contribuíram para popularizar o trap no Brasil nos anos seguintes, com hits que misturavam
-                o ritmo do trap com o funk carioca e o brega.</p>
-                <p>Mas foi a partir de 2017 que o trap brasileiro realmente explodiu, graças ao sucesso de artistas como Raffa Moreira e Matuê. Raffa Moreira, também conhecido como "Young Raff", é um dos principais nomes do trap brasileiro e é considerado um dos pioneiros do movimento. Ele começou a produzir música em 2012 e, aos poucos, foi conquistando espaço na cena underground do rap nacional.</p>
+                <p>Mas foi a partir de 2017 que o trap brasileiro realmente explodiu, graças ao sucesso de artistas como Raffa Moreira e Matuê. Raffa Moreira, também conhecido como "Young Raff", é um dos principais nomes do trap brasileiro e é considerado um dos pioneiros do movimento. Ele começou a produzir música em 2012 e, aos poucos, foi conquistando espaço na cena underground do rap nacional, e foi ai que diversos artistas começaram a surgir na cena do trap no Brasil, porém agora inovando o que tinha sido criado em atlanta a anos atrás e trazendo o ritmo brasileiro a esse estilo tão inovador.</p>
                 <p>Com o lançamento do seu álbum "Piscina de Plutônio" em 2017, Raffa Moreira chamou a atenção do público e da mídia, consolidando sua posição como um dos principais nomes do trap brasileiro. Seu som mistura elementos de trap, punk rock e emo, criando um estilo único e inovador.</p>
                 <p>Hoje, o trap brasileiro é um dos gêneros mais populares do rap nacional, com uma cena vibrante e diversa que conta com artistas de todos os cantos do país. O som do trap brasileiro é caracterizado por batidas pesadas, letras ousadas e uma mistura única de influências nacionais e internacionais. E com artistas como Raffa Moreira e Matuê liderando o movimento, o futuro do trap brasileiro parece mais promissor do que nunca.</p>
         </div>
     </div>
+    </div>
 
+    <div class="perfilUser" id="perfilUser">
+        <div class="conteudo-bloco-flutuante">
+            <div class="infUser">
+                <div class="nomeUser">Olá, <span id="nome_saudacao">Kauã</span></div>
+            </div>
+            <div class="options">
+                <a href="profileAnalytics.html#contagemDePontos">Estatísticas</a>
+                <a href="login.html">Fazer logout</a>
+        </div>
+    </div>
+</div>
 
+<script>
+    function abrirPerfil() {
+        var perfil = document.getElementById("perfilUser")
+
+        if (perfil.style.display == 'none') {
+            perfil.style.display = `flex`
+        } else {
+            perfil.style.display = 'none'
+        }
+    }
+</script>
 
 
     <div class="footer">
