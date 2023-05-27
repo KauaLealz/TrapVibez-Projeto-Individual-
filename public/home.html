@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrapVibeZ | Home</title>
+    <link rel="stylesheet" href="./css/trapvibez.css">
+    <link rel="icon" href="./assets/logo.png">
+    <script src="./js/funcoes.js"></script>
+</head>
+
+<body onload="proximaMusica(),proximoArtista(),validarSessao()">
+
+    <div class="abaPerfil">
+
+    </div>
+
+    <div class="header">
+        <div class="logo">
+            <img src="./assets/letreiro.png" alt="">
+        </div>
+        <div class="nav">
+            <a href="home.html" id="active">Home</a>
+            <a href="noticias.html">Notícias</a>
+            <a href="quizhome.html">Quiz</a>
+            <a href="historia.html">História</a>
+            <a href="sobremim.html">Autor</a>
+        </div>
+        <div class="icons">
+            <a href="https://open.spotify.com/user/31ugctz6pgp6jfdixccnqrd3ul3i"><img src="./assets/spotify.png"
+                    alt=""></a>
+            <a href="https://github.com/KauaLealz/TrapVibez-Projeto-Individual-"><img src="./assets/github.png"
+                    alt=""></a>
+            <a onclick="abrirPerfil()"><img src="./assets/user.png" alt=""></a>
+        </div>
+    </div>
+    </div>
+
+
+    <div class="principal">
+
+        <div class="slogan">
+            <h4 id="frase1">Onde a cultura do trap</h4>
+            <h4 id="frase2">encontra sua voz</h4>
+        </div>
+
+        <div class="container">
+
+            <div class="carrosel">
+
+                <button onclick="anteriorMusica()" id="buttonPrevious"><img src="./assets/previousWhite.png"
+                        alt=""></button>
+
+                <div class="musicas" id="musicas">
+
+                </div>
+
+                <button onclick="proximaMusica()" id="buttonNext"><img src="./assets/nextWhite.png" alt=""></button>
+
+            </div>
+
+        </div>
+
+        <div class="artistas">
+            <div class="titulos">
+                <h4>Trending Artists</h4>
+            </div>
+
+            <div class="carrosel">
+
+                <button onclick="anteriorArtista()"><img src="./assets/previousWhite.png" alt=""></button>
+
+                <div class="trendArtistas" id="trendArtistas">
+
+                </div>
+
+                <button onclick="proximoArtista()"><img src="./assets/nextWhite.png" alt=""></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="playlist">
+        <iframe style="border-radius:12px"
+            src="https://open.spotify.com/embed/playlist/69RS1lqXbbHhDtzW2rv14j?utm_source=generator&theme=0"
+            width="100%" height="352" frameBorder="0" allowfullscreen=""
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    </div>
+    </div>
+    </div>
+
+    <div class="footer">
+        <h4>CopyRight @ TrapVibez 2023</h4>
+    </div>
+
+    <div class="perfilUser" id="perfilUser">
+        <div class="conteudo-bloco-flutuante">
+            <div class="infUser">
+                <div class="nomeUser">Olá, <span id="nome_saudacao"></span></div>
+            </div>
+            <div class="options">
+                <a href="profileAnalytics.html#contagemDePontos">Estatísticas</a>
+                <a href="login.html" onclick="sessionStorage.clear()">Fazer logout</a>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>
+
+<script>
+
+    var posicaoM1 = 0
+    var posicaoM2 = 1
+    var posicaoM3 = 2
+
+    var posicaoA1 = 0
+
+    var listaMusicas = [
+        `<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/4qDT0BeJ7BjatrN9k8AvB4?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>`,
+        `<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/6a6UEfhgIKfzrZu1hqRYup?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>`,
+        `<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/52kcarcX0FQ6wPulXm2bMJ?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>`,
+        `<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/7BM9PAFxTqYEYGmT23VuBV?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>`,
+        `<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/4Fd1cs4q4oA95DmqiPSXhO?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>`,
+        `<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/41PSYvvRRloahcTUdYBchA?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>`,
+        `<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/3ktTWpYdXrYApH54cBo4Ap?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>`,
+        `<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/12YCtLHGk6tP6RbHDHflCs?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>`,
+        `<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/1JzMOnuyabzpRuSudDD4Cq?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>`,
+        `<iframe style="border-radius:12px"
+                        src="https://open.spotify.com/embed/track/4rwDsOmNDIcAG10pruK4SL?utm_source=generator&theme=0"
+                        width="100%" height="352" frameBorder="0" allowfullscreen=""
+                        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                        loading="lazy"></iframe>`,
+        `<iframe style="border-radius:12px"
+                        src="https://open.spotify.com/embed/track/6OeBK3dJroqoXOHZLitRpW?utm_source=generator&theme=0"
+                        width="100%" height="352" frameBorder="0" allowfullscreen=""
+                        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                        loading="lazy"></iframe>`,
+        `<iframe style="border-radius:12px"
+                        src="https://open.spotify.com/embed/track/7xdTUQQpYsMxgCj1LZqsaD?utm_source=generator&theme=0"
+                        width="100%" height="352" frameBorder="0" allowfullscreen=""
+                        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                        loading="lazy"></iframe>`
+    ]
+
+    var listaArtistas = [`<<iframe style="border-radius:12px" src="https://open.spotify.com/embed/artist/4xKfNBUXa00go8RU9TwwkI?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>`, `<iframe style="border-radius:12px" src="https://open.spotify.com/embed/artist/460m2YG30duLCuHwFdiLgX?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>`, `<iframe style="border-radius:12px" src="https://open.spotify.com/embed/artist/1ZzJx2AgPmbnOE6OXhnn5K?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>`, `<iframe style="border-radius:12px" src="https://open.spotify.com/embed/artist/4Y0VwRwAOyJutxoVpPX4td?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>`, `<iframe style="border-radius:12px" src="https://open.spotify.com/embed/artist/1beK7BpUs2hTagfzLUb1HB?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>`, `<iframe style="border-radius:12px" src="https://open.spotify.com/embed/artist/05qCf6M7E7AxizHVmrcPqh?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>`, `<iframe style="border-radius:12px"src="https://open.spotify.com/embed/artist/5nP8x4uEFjAAmDzwOEc9b8?utm_source=generator&theme=0"width="100%" height="152" frameBorder="0" allowfullscreen=""allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"loading="lazy"></iframe>`]
+
+    function proximaMusica() {
+
+
+        if (posicaoM1 == 12) {
+            posicaoM1 = 0
+        }
+        if (posicaoM2 == 12) {
+            posicaoM2 = 0
+        }
+        if (posicaoM3 == 12) {
+            posicaoM3 = 0
+        }
+
+        musicas.innerHTML = `${listaMusicas[posicaoM1]}
+       ${listaMusicas[posicaoM2]}
+       ${listaMusicas[posicaoM3]}`
+        posicaoM1++
+        posicaoM2++
+        posicaoM3++
+
+    }
+
+    function anteriorMusica() {
+
+
+        if (posicaoM1 == 0) {
+            posicaoM1 = 12
+        }
+        if (posicaoM2 == 0) {
+            posicaoM2 = 12
+        }
+        if (posicaoM3 == 0) {
+            posicaoM3 = 12
+        }
+
+        posicaoM1--
+        posicaoM2--
+        posicaoM3--
+
+        musicas.innerHTML = `${listaMusicas[posicaoM1]}
+       ${listaMusicas[posicaoM2]}
+       ${listaMusicas[posicaoM3]}`
+
+    }
+
+    function proximoArtista() {
+
+
+        if (posicaoA1 == 6) {
+            posicaoA1 = 0
+        }
+
+        trendArtistas.innerHTML = `${listaArtistas[posicaoA1]}`
+        posicaoA1++
+
+    }
+
+    function anteriorArtista() {
+
+
+        if (posicaoA1 == 0) {
+            posicaoA1 = 6
+        }
+
+        posicaoA1--
+
+        trendArtistas.innerHTML = `${listaArtistas[posicaoA1]}`
+
+    }
+</script>

@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TrapVibeZ | Analytics</title>
+  <link rel="stylesheet" href="./css/trapvibez.css">
+  <link rel="icon" href="./assets/logo.png">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="./js/funcoes.js"></script>
+</head>
+
+<body onload="validarSessao(), receberDadosQuiz(), receberDadosRanking()">
+
+  <div class="header">
+
+    <div class="logo">
+      <img src="./assets/letreiro.png" alt="">
+        </div>
+
+    <div class="nav">
+      <a href="home.html">Home</a>
+      <a href="noticias.html">Notícias</a>
+      <a href="quizhome.html">Quiz</a>
+      <a href="historia.html">História</a>
+      <a href="sobremim.html">Autor</a>
+    </div>
+
+    <div class="icons">
+      <a href="https://open.spotify.com/user/31ugctz6pgp6jfdixccnqrd3ul3i"><img src="./assets/spotify.png" alt=""></a>
+      <a href="https://github.com/KauaLealz/TrapVibez-Projeto-Individual-"><img src="./assets/github.png" alt=""></a>
+      <a onclick="abrirPerfil()"><img id="perfilImg" src="./assets/user.png" alt=""></a>
+    </div>
+  </div>
+
+
+  <div class="perfilUser" id="perfilUser">
+    <div class="conteudo-bloco-flutuante">
+      <div class="infUser">
+        <div class="nomeUser">Olá, <span id="nome_saudacao">Kauã</span></div>
+      </div>
+      <div class="options">
+        <a href="">Estatísticas</a>
+        <a href="login.html">Fazer logout</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="dashboardUser">
+    <div class="containerDash">
+      <div class="indicadores">
+        <div class="indicador1">
+          <h4>Pontos Totais</h4>
+          <span id="spanPontos"></span>
+        </div>
+        <div class="indicador2">
+          <h4>Nível</h4>
+          <span id="spanNivel">Sabichão (100 Pts para o próximo nível)</span>
+        </div>
+      </div>
+      <div class="graficosDash">
+        <div class="graficoDash1">
+          <h4>Acertos Vs Erros</h4>
+          <div id="graficoDash1">
+            <canvas id="graficoPizza"></canvas>
+          </div>
+        </div>
+        <div class="graficoDash2">
+          <h4>Ranking (Maior quantidade de Acertos)</h4>
+          <div id="graficoDash2">
+            <canvas id="graficoBarras"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="perfilUser" id="perfilUser">
+    <div class="conteudo-bloco-flutuante">
+      <div class="infUser">
+        <div class="nomeUser">Olá, <span id="nome_saudacao">Kauã</span></div>
+      </div>
+      <div class="options">
+        <a href="profileAnalytics.html#contagemDePontos">Estatísticas</a>
+        <a href="login.html" onclick="sessionStorage.clear()">Fazer logout</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <h4>CopyRight @ TrapVibez 2023</h4>
+  </div>
+
+</body>
+
+</html>
+
+<script>
+
+  function receberDadosQuiz() {
+
+    var idUsuarioVar = sessionStorage.ID_USUARIO
+
+    fetch(`/usuarios/receber-dados-quiz`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        idUsuarioServer: idUsuarioVar
+      })
+    }).then(function (resposta) {
+      console.log("ESTOU NO THEN DO entrar()!")
+
+      if (resposta.ok) {
+        resposta.json().then(function (resposta) {
+          console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+          resposta.reverse();
+          plotarGraficoQuiz(resposta);
+          exibirDados(resposta)
+        });
+      } else {
+
+        alert("Houve um erro ao tentar realizar o login!");
+
+        resposta.text().then(texto => {
+          console.error(texto);
+          finalizarAguardar(texto);
+        });
+      }
+
+    }).catch(function (erro) {
+      console.log(erro);
+    })
+
+    return false;
+  }
+
+  function receberDadosRanking() {
+
+    fetch(`usuarios/receber-dados-ranking`).then(function (response) {
+      if (response.ok) {
+        response.json().then(function (resposta) {
+          console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+          resposta.reverse();
+          plotarGraficoRanking(resposta)
+        });
+      } else {
+        console.error('Nenhum dado encontrado ou erro na API');
+      }
+    })
+      .catch(function (error) {
+        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+      });
+  }
+
+  function plotarGraficoQuiz(resposta) {
+    console.log('iniciando plotagem do gráfico...');
+
+    // Criando estrutura para plotar gráfico - labels
+    let labels = [];
+
+    // Criando estrutura para plotar gráfico - dados
+    let dados = {
+      label: [],
+      datasets: [
+        {
+          label: 'Acertos',
+          data: [],
+          fill: true,
+          borderWidth: 0,
+          tension: 1,
+          backgroundColor: ['#19C26D']
+        },
+        {
+          label: 'Erros',
+          data: [],
+          fill: true,
+          borderWidth: 0,
+          tension: 1,
+          backgroundColor: ['#FF2900']
+        }]
+    };
+
+    console.log('----------------------------------------------')
+    console.log('Estes dados foram recebidos pela função "obterDadosGraficoQuiz" e passados para "plotarGraficoQuiz":')
+    console.log(resposta)
+
+    // Inserindo valores recebidos na estrutura para plotar o gráfico
+    for (let i = 0; i < resposta.length; i++) {
+      var registro = resposta[i];
+      labels.push(registro.acertos);
+      dados.datasets[0].data.push(registro.acertos);
+      labels.push(registro.erros);
+      dados.datasets[1].data.push(registro.erros);
+    }
+
+    console.log('----------------------------------------------')
+    console.log('O gráfico será plotado com os respectivos valores:')
+    console.log('Labels:')
+    console.log(labels)
+    console.log('Dados:')
+    console.log(dados.datasets)
+    console.log('----------------------------------------------')
+
+    // Criando estrutura para plotar gráfico - config
+    const config = {
+      type: 'pie',
+      data: dados
+    };
+
+    // Adicionando gráfico criado em div na tela
+    let myChart = new Chart(
+      document.getElementById('graficoPizza'),
+      config
+    );
+  }
+
+
+  function plotarGraficoRanking(resposta) {
+    console.log('iniciando plotagem do gráfico...');
+
+    // Criando estrutura para plotar gráfico - labels
+    let labels = [];
+
+    // Criando estrutura para plotar gráfico - dados
+    let dados = {
+      labels: labels,
+      datasets: [{
+        data: [],
+        backgroundColor: ["#19C26D"] // Definindo a cor das barras
+      }]
+    };
+
+    console.log('----------------------------------------------');
+    console.log('Estes dados foram recebidos pela função "obterDadosGrafico" e passados para "plotarGrafico":');
+    console.log(resposta);
+
+    // Inserindo valores recebidos em estrutura para plotar o gráfico
+    for (let i = 0; i < resposta.length; i++) {
+      let registro = resposta[i];
+      labels.push(registro.nome_usuario);
+      dados.datasets[0].data.push(registro.maior_acerto);
+    }
+
+    console.log('----------------------------------------------');
+    console.log('O gráfico será plotado com os respectivos valores:');
+    console.log('Labels:');
+    console.log(labels);
+    console.log('Dados:');
+    console.log(dados.datasets);
+    console.log('----------------------------------------------');
+
+    // Criando estrutura para plotar gráfico - config
+    const config = {
+      type: 'bar',
+      data: dados,
+      options: {
+        plugins: {
+          legend: {
+            display: false  // Remover a legenda
+          }
+        },
+        scales: {
+          x: {
+            ticks: {
+              color: 'white'  // Definir a cor das labels como branca
+            }
+          },
+          y: {
+            ticks: {
+              color: 'white'  // Definir a cor dos valores do eixo y como branca
+            }
+          }
+        }
+      }
+    };
+
+    // Adicionando gráfico criado em div na tela
+    let myChart = new Chart(
+      document.getElementById(`graficoBarras`),
+      config
+    );
+  }
+
+  function exibirDados(resposta) {
+
+    var acertos = Number(resposta[0].acertos)
+    var pontos = acertos * 100
+
+    if(acertos == 0){
+      graficoDash2.innerHTML = ""
+          }
+
+    spanPontos.innerHTML = `${pontos}`
+
+ if(pontos==0){
+  spanNivel.innerHTML = `(Jogue o quiz para o próximo nível)`
+  spanNivel.style.color = "red"; 
+}else if(pontos<1000){
+  spanNivel.innerHTML = `Novato (${1000-pontos} Pts para o próximo nível)`
+  spanNivel.style.color = "#45EDDC"; 
+}
+else if(pontos<2000){
+  spanNivel.innerHTML = `Iniciante (${2000-pontos} Pts para o próximo nível)`
+  spanNivel.style.color = "#19C26D"; 
+}else if(pontos<5000){
+  spanNivel.innerHTML = `Intermediário (${5000-pontos} Pts para o próximo nível)`
+  spanNivel.style.color = "goldenrod";
+}else if(pontos<10000){
+  spanNivel.innerHTML = `Avançado (${10000-pontos} Pts para o próximo nível)`
+  spanNivel.style.color = "blue"; 
+}else{
+  spanNivel.innerHTML = `Sabichão (Você chegou ao nível máximo)`
+  spanNivel.style.color = "purple";
+ }
+
+  }
+
+</script>

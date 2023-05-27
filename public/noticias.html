@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrapVibeZ | Noticias</title>
+    <link rel="stylesheet" href="./css/trapvibez.css">
+    <link rel="icon" href="./assets/logo.png">
+    <script src="./js/funcoes.js"></script>
+</head>
+
+<body onload="validarSessao(), verificarUser(), obterNoticias()">
+
+    <div class="header">
+        <div class="logo">
+            <img src="./assets/letreiro.png" alt="">
+        </div>
+        <div class="nav">
+            <a href="home.html">Home</a>
+            <a href="noticias.html" id="active">Notícias</a>
+            <a href="quizhome.html">Quiz</a>
+            <a href="historia.html">História</a>
+            <a href="sobremim.html">Autor</a>
+        </div>
+        <div class="icons">
+            <a href="https://open.spotify.com/user/31ugctz6pgp6jfdixccnqrd3ul3i"><img src="./assets/spotify.png"
+                    alt=""></a>
+            <a href="https://github.com/KauaLealz/TrapVibez-Projeto-Individual-"><img src="./assets/github.png"
+                    alt=""></a>
+            <a onclick="abrirPerfil()"><img src="./assets/user.png" alt=""></a>
+        </div>
+    </div>
+    </div>
+
+    <h4 id="tituloNoticias">Portal de Notícias</h4>
+
+    <div class="criarNoticia" id="criarNoticia" style="display: none;">
+        <h4>Compartilhe sua notícia</h4>
+        <textarea id="input_noticia" rows="4" cols="50"></textarea>
+        <h4>Link da Imagem</h4>
+        <input id="img_noticia">
+        <div class="buttonLink">
+        <h4>Link da Notícia</h4>
+        <input id="link_noticia">
+<button onclick = "postarNoticia()">Postar</button>
+    </div>
+    </div>
+
+    <div class="containerNoticias" id="containerNoticias">
+    </div>
+
+
+    <div class="footer">
+        <h4>CopyRight @ TrapVibez 2023</h4>
+    </div>
+
+    <div class="perfilUser" id="perfilUser">
+        <div class="conteudo-bloco-flutuante">
+            <div class="infUser">
+                <div class="nomeUser">Olá, <span id="nome_saudacao">Kauã</span></div>
+            </div>
+            <div class="options">
+                <a href="profileAnalytics.html#contagemDePontos">Estatísticas</a>
+                <a href="login.html" onclick="sessionStorage.clear()">Fazer logout</a>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
+
+<script>
+
+function verificarUser(){
+
+    var usuario = sessionStorage.getItem('ID_USUARIO');
+
+    if(usuario == 1){
+        criarNoticia.style.display = "flex"
+    }
+}
+
+function postarNoticia(){
+
+    var dataAtual = new Date();
+
+var dia = dataAtual.getDate();
+var mes = dataAtual.getMonth() + 1;
+var ano = dataAtual.getFullYear();
+var escrita_noticia = input_noticia.value
+var link = link_noticia.value
+var img = img_noticia.value
+
+fetch("/usuarios/postar-noticia", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+        descricaoServer: escrita_noticia,
+        linkServer: link,
+        imgServer: img,
+        diaServer: dia,
+        mesServer: mes,
+        anoServer: ano
+    })
+}).then(function (resposta) {
+    console.log("ENVIANDO DADOS")
+
+    if (resposta.ok) {
+      alert("Noticia Postada")
+
+    } else {
+
+        alert("Houve um erro ao inserir dados!");
+    }
+
+}).catch(function (erro) {
+    console.log(erro);
+})
+
+return false;
+}
+
+
+function obterNoticias(){
+
+    fetch(`usuarios/receber-noticias`).then(function (response) {
+      if (response.ok) {
+        response.json().then(function (resposta) {
+          console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+          exibirNoticias(resposta)
+        });
+      } else {
+        console.error('Nenhum dado encontrado ou erro na API');
+      }
+    })
+      .catch(function (error) {
+        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+      });
+}
+
+function exibirNoticias(resposta){
+
+for(var posicao = 0; posicao<resposta.length;posicao++){
+
+    console.log(resposta[posicao].img)
+
+var imagem = resposta[posicao].img
+var link = resposta[posicao].link
+var desc = resposta[posicao].descricao
+var dia = resposta[posicao].dia
+var mes = resposta[posicao].mes
+var ano = resposta[posicao].ano
+
+containerNoticias.innerHTML += `
+<div class="noticias">
+            <div class="imgNoticia">
+                <img src="${imagem} alt="Imagem da Notícia">
+            </div>
+            <div class="noticiasTexto">
+                <h3 class="tag">Trap Music</h3>
+                <h4 class="tituloNoticia"><a
+                        href="${link}">${desc}</a></h4>
+                <h3 class="date">Publicado em ${dia} do ${mes} de ${ano}</h3>
+            </div>
+        </div>
+`
+}
+
+}
+
+</script>

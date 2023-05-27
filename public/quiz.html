@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrapVibeZ | Quiz</title>
+    <link rel="stylesheet" href="./css/trapvibez.css">
+    <link rel="icon" href="./assets/logo.png">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body id="bodyPerguntas">
+
+    <div class="quizAll" id="quizAll">
+
+        <div class="progress-bar">
+            <div class="progress-fill"></div>
+        </div>
+
+        <div class="quizIn" id="quizIn">
+            <h4>Pronto?</h4>
+        </div>
+
+    </div>
+
+    </div>
+
+
+</body>
+
+</html>
+
+<script>
+
+    var acertos = 0
+    var erros = 0
+
+    var pergunta_atual = 0
+    var perguntas_respondidas = []
+
+    function inserirDadosQuiz() {
+
+        var idUser = sessionStorage.ID_USUARIO
+
+        fetch("/usuarios/inserirDadosQuiz", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                acertosServer: acertos,
+                errosServer: erros,
+                idUserServer: idUser
+            })
+        }).then(function (resposta) {
+            console.log("ENVIANDO DADOS")
+
+            if (resposta.ok) {
+                console.log(resposta);
+
+                resposta.json().then(json => {
+                    console.log(json);
+                    console.log(JSON.stringify(json));
+
+                    setTimeout(function () {
+                        window.location = `quizHome.html`
+                    }, 5000); // apenas para exibir o loading
+
+                });
+
+            } else {
+
+                alert("Houve um erro ao inserir dados!");
+            }
+
+        }).catch(function (erro) {
+            console.log(erro);
+        })
+
+        return false;
+    }
+
+    function perguntas() {
+        var listaPerguntas = [
+            `
+            <div class="perguntasquiz" id="perguntasquiz2">
+    <div class="perguntas">
+        <h3>Qual o nome do primeiro álbum de trap lançado no Brasil?</h3>
+    </div>
+    <div class="alternativas">
+        <button class="alternativastxt" onclick="erro   ()">Rolex Day Date</button>
+        <button class="alternativastxt" onclick="acerto()">Mixtape Poison</button>
+        <button class="alternativastxt" onclick="erro   ()">MC Buzzz</button>
+        <button class="alternativastxt" onclick="erro   ()">The Mainstream</button>
+    </div>
+</div>`,
+            `
+            <div class="perguntasquiz" id="perguntasquiz3">
+    <div class="perguntas">
+        <h3>Qual o nome do grupo de trap formado por Dfideliz, Jé Santiago, Derek e Igu?</h3>
+    </div>
+    <div class="alternativas">
+        <button class="alternativastxt" onclick="erro   ()">ADL</button>
+        <button class="alternativastxt" onclick="acerto()">Recayd Mob</button>
+        <button class="alternativastxt" onclick="erro   ()">PrimeiraMente</button>
+        <button class="alternativastxt" onclick="erro   ()">Haikaiss</button>
+    </div>
+</div>`,
+            `
+            <div class="perguntasquiz" id="perguntasquiz4">
+    <div class="perguntas">
+        <h3>Qual o nome do álbum mais famoso de Matuê?</h3>
+    </div>
+    <div class="alternativas">
+        <button class="alternativastxt" onclick="erro   ()">Ginza</button>
+        <button class="alternativastxt" onclick="erro   ()">Poison</button>
+        <button class="alternativastxt" onclick="erro   ()">Venenos do Sono</button>
+        <button class="alternativastxt" onclick="acerto()">Máquina do Tempo</button>
+    </div>
+</div>`,
+            `
+    <div class="perguntasquiz" id="perguntasquiz">
+    <div class="perguntas">
+        <h3>Qual a cidade brasileira que é considerada o berço do trap nacional?</h3>
+    </div>
+    <div class="alternativas">
+        <button class  ="alternativastxt" onclick = "acerto()">São Paulo</button>
+        <button class = "alternativastxt" onclick = "erro()">Rio de Janeiro</button>
+        <button class = "alternativastxt" onclick = "erro()">Salvador</button>
+        <button class = "alternativastxt" onclick = "erro()">Vitória</button>
+    </div>
+</div>`,
+            `
+    <div class="perguntasquiz" id="perguntasquiz">
+    <div class="perguntas">
+        <h3>Qual o nome do grupo formado pelo rapper Felp22? </h3>
+    </div>
+    <div class="alternativas">
+        <button class = "alternativastxt" onclick = "erro()">Recayd Mob</button>
+        <button class = "alternativastxt" onclick = "erro()">Costa Gold</button>
+        <button class  ="alternativastxt" onclick = "acerto()">Cacife Clandestino</button>
+        <button class = "alternativastxt" onclick = "erro()">3030</button>
+    </div>
+</div>`,
+            `
+    <div class="perguntasquiz" id="perguntasquiz">
+    <div class="perguntas">
+        <h3>Em que cidade nasceu o rapper e produtor musical Matuê?</h3>
+    </div>
+    <div class="alternativas">
+        <button class  ="alternativastxt" onclick = "acerto()">Fortaleza</button>
+        <button class = "alternativastxt" onclick = "erro()">São Paulo</button>
+        <button class = "alternativastxt" onclick = "erro()">Distrito Federal</button>
+        <button class = "alternativastxt" onclick = "erro()">Rio de Janeiro</button>
+    </div>
+</div>`,
+            `
+    <div class="perguntasquiz" id="perguntasquiz">
+    <div class="perguntas">
+        <h3>Em que ano surgiu o trap no Brasil?</h3>
+    </div>
+    <div class="alternativas">
+        <button class = "alternativastxt" onclick = "erro()">2017</button>
+        <button class = "alternativastxt" onclick = "erro()">2019</button>
+        <button class = "alternativastxt" onclick = "erro()">2000</button>
+        <button class  ="alternativastxt" onclick = "acerto()">2014</button>
+    </div>
+</div>`,
+            `
+    <div class="perguntasquiz" id="perguntasquiz">
+    <div class="perguntas">
+        <h3>Qual é o nome do rapper que lançou o hit "M4" em 2021?</h3>
+    </div>
+    <div class="alternativas">
+        <button class  ="alternativastxt" onclick = "acerto()">Teto</button>
+        <button class = "alternativastxt" onclick = "erro()">Wiu</button>
+        <button class = "alternativastxt" onclick = "erro()">FBC</button>
+        <button class = "alternativastxt" onclick = "erro()">Raffa Moreira</button>
+    </div>
+</div>`,
+            `
+    <div class="perguntasquiz" id="perguntasquiz">
+    <div class="perguntas">
+        <h3>Em qual cidade de SP nasceu Raffa Moreira?</h3>
+    </div>
+    <div class="alternativas">
+        <button class = "alternativastxt" onclick = "erro()">São Bernardo</button>
+        <button class  ="alternativastxt" onclick = "acerto()">Guarulhos</button>
+        <button class = "alternativastxt" onclick = "erro()">São Paulo</button>
+        <button class = "alternativastxt" onclick = "erro()">Presidente Prudente</button>
+    </div>
+</div>`,
+            `
+    <div class="perguntasquiz" id="perguntasquiz">
+    <div class="perguntas">
+        <h3>Quais artistas responsáveis por lançar a faixa "Copo Roxo"?</h3>
+    </div>
+    <div class="alternativas">
+        <button class = "alternativastxt" onclick = "erro()">Lil Raff e Veigh</button>
+        <button class  ="alternativastxt" onclick = "erro()">Teto e Wiu</button>
+        <button class = "alternativastxt" onclick = "acerto()">Matuê e Predella</button>
+        <button class = "alternativastxt" onclick = "erro()">Matuê e Xamã</button>
+    </div>
+</div>`,
+            `
+    <div class="perguntasquiz" id="perguntasquiz">
+    <div class="perguntas">
+        <h3>Qual álbum teve a maior estréia do spotify Brasil?</h3>
+    </div>
+    <div class="alternativas">
+        <button class = "alternativastxt" onclick = "acerto()">Dos Prédios Deluxe</button>
+        <button class  ="alternativastxt" onclick = "erro()">Máquina do Tempo</button>
+        <button class = "alternativastxt" onclick = "erro()">Lume</button>
+        <button class = "alternativastxt" onclick = "erro()">333</button>
+    </div>
+</div>`,
+            `
+    <div class="perguntasquiz" id="perguntasquiz">
+    <div class="perguntas">
+        <h3>Qual música teve a maior estreia no spotify Brasil?</h3>
+    </div>
+    <div class="alternativas">
+        <button class = "alternativastxt" onclick = "erro()">M4</button>
+        <button class  ="alternativastxt" onclick = "acerto()">Conexôes de Máfia</button>
+        <button class = "alternativastxt" onclick = "erro()">Vida Chique</button>
+        <button class = "alternativastxt" onclick = "erro()">Good Vibe</button>
+    </div>
+</div>`,
+            `
+    <div class="perguntasquiz" id="perguntasquiz">
+    <div class="perguntas">
+        <h3>Qual o nome da Diss feita por Dfideliz para Spinardi?</h3>
+    </div>
+    <div class="alternativas">
+        <button class = "alternativastxt" onclick = "erro()">Uma Bala</button>
+        <button class = "alternativastxt" onclick = "erro()">Sulicídio</button>
+        <button class = "alternativastxt" onclick = "erro()">Plaqtudun</button>
+        <button class  ="alternativastxt" onclick = "acerto()">Mlks de Sp</button>
+    </div>
+</div>`,
+            `
+    <div class="perguntasquiz" id="perguntasquiz">
+    <div class="perguntas">
+        <h3>Qual o nome verdadeiro do Matuê?</h3>
+    </div>
+    <div class="alternativas">
+        <button class = "alternativastxt" onclick = "erro()">Cléber</button>
+        <button class  ="alternativastxt" onclick = "acerto()">Mateus</button>
+        <button class = "alternativastxt" onclick = "erro()">Jorge</button>
+        <button class = "alternativastxt" onclick = "erro()">Roberto</button>
+    </div>
+</div>`,
+            `
+    <div class="perguntasquiz" id="perguntasquiz">
+    <div class="perguntas">
+        <h3>Qual o nome verdadeiro do Teto?</h3>
+    </div>
+    <div class="alternativas">
+        <button class = "alternativastxt" onclick = "erro()">Gabriel>
+        <button class = "alternativastxt" onclick = "erro()">Paulo</button>
+        <button class  ="alternativastxt" onclick = "acerto()">Clériton</button>
+        <button class = "alternativastxt" onclick = "erro()">Kauã</button>
+    </div>
+</div>`,
+            `
+    <div class="perguntasquiz" id="perguntasquiz">
+    <div class="perguntas">
+        <h3>Trap mais visto em 2018?</h3>
+    </div>
+    <div class="alternativas">
+        <button class = "alternativastxt" onclick = "erro()">Luxúria</button>
+        <button class  ="alternativastxt" onclick = "acerto()">Plaqtudun</button>
+        <button class = "alternativastxt" onclick = "erro()">Bro</button>
+        <button class = "alternativastxt" onclick = "erro()">Chains</button>
+    </div>
+</div>`,
+            `
+    <div class="perguntasquiz" id="perguntasquiz">
+    <div class="perguntas">
+        <h3>Qual trapper ganhou 50 mil reais na globo?</h3>
+    </div>
+    <div class="alternativas">
+        <button class  ="alternativastxt" onclick = "acerto()">Caverinha</button>
+        <button class = "alternativastxt" onclick = "erro()">Kayblack</button>
+        <button class = "alternativastxt" onclick = "erro()">Veigh</button>
+        <button class = "alternativastxt" onclick = "erro()">Raffa Moreira</button>
+    </div>
+</div>`,
+            `
+    <div class="perguntasquiz" id="perguntasquiz">
+    <div class="perguntas">
+        <h3>Qual trapper lançou o hit "Nav?</h3>
+    </div>
+    <div class="alternativas">
+        <button class = "alternativastxt" onclick = "erro()">Luccas Carlos</button>
+        <button class = "alternativastxt" onclick = "erro()">Aka Rasta</button>
+        <button class = "alternativastxt" onclick = "erro()">Denov</button>
+        <button class  ="alternativastxt" onclick = "acerto()">Jovem Dex</button>
+    </div>
+</div>`,
+            `
+    <div class="perguntasquiz" id="perguntasquiz">
+    <div class="perguntas">
+        <h3>O que significa a palavra "Trap"?</h3>
+    </div>
+    <div class="alternativas">
+        <button class  ="alternativastxt" onclick = "acerto()">Armadilha</button>
+        <button class = "alternativastxt" onclick = "erro()">Balanço</button>
+        <button class = "alternativastxt" onclick = "erro()">Ritmo</button>
+        <button class = "alternativastxt" onclick = "erro()">Predador</button>
+    </div>
+</div>`,
+            `
+    <div class="perguntasquiz" id="perguntasquiz">
+    <div class="perguntas">
+        <h3>Qual desses é um subgênero de trap?</h3>
+    </div>
+    <div class="alternativas">
+        <button class = "alternativastxt" onclick = "erro()">Folk</button>
+        <button class  ="alternativastxt" onclick = "acerto()">Drill</button>
+        <button class = "alternativastxt" onclick = "erro()">Rock</button>
+        <button class = "alternativastxt" onclick = "erro()">Eletronic</button>
+    </div>
+</div>`,
+            `
+    <div class="perguntasquiz" id="perguntasquiz">
+    <div class="perguntas">
+        <h3>Qual rapper explodiu na cena após começar a fazer drill?</h3>
+    </div>
+    <div class="alternativas">
+        <button class = "alternativastxt" onclick = "erro()">São Bernardo</button>
+        <button class  ="alternativastxt" onclick = "acerto()">Guarulhos</button>
+        <button class = "alternativastxt" onclick = "erro()">São Paulo</button>
+        <button class = "alternativastxt" onclick = "erro()">Presidente Prudente</button>
+    </div>
+</div>`,
+            `
+    <div class="perguntasquiz" id="perguntasquiz">
+    <div class="perguntas">
+        <h3>Em qual cidade de SP nasceu Raffa Moreira?</h3>
+    </div>
+    <div class="alternativas">
+        <button class = "alternativastxt" onclick = "erro()">Jovem Dex</button>
+        <button class = "alternativastxt" onclick = "erro()">Brandão>
+        <button class = "alternativastxt" onclick = "erro()">Alee</button>
+        <button class  ="alternativastxt" onclick = "acerto()">Leviano</button>
+    </div>
+</div>`,
+            `
+    <div class="perguntasquiz" id="perguntasquiz">
+    <div class="perguntas">
+        <h3>Qual trapper gerou polêmica após sair da Hash Records?</h3>
+    </div>
+    <div class="alternativas">
+        <button class = "alternativastxt" onclick = "erro()">Wiu</button>
+        <button class  ="alternativastxt" onclick = "acerto()">Teto</button>
+        <button class = "alternativastxt" onclick = "erro()">Alee</button>
+        <button class = "alternativastxt" onclick = "erro()">Jovem Dex</button>
+    </div>
+</div>`,
+            `
+    <div class="perguntasquiz" id="perguntasquiz">
+    <div class="perguntas">
+        <h3>Qual trapper fundou a Maisntreet Records?</h3>
+    </div>
+    <div class="alternativas">
+        <button class = "alternativastxt" onclick = "erro()">Jhonny</button>
+        <button class  ="alternativastxt" onclick = "acerto()">Orochi</button>
+        <button class = "alternativastxt" onclick = "erro()">Oruam</button>
+        <button class = "alternativastxt" onclick = "erro()">Chefin</button>
+    </div>
+</div>`,
+            `
+    <div class="perguntasquiz" id="perguntasquiz">
+    <div class="perguntas">
+        <h3>Qual trapper possui um feat com o artista Ed Sheeran?</h3>
+    </div>
+    <div class="alternativas">
+        <button class = "alternativastxt" onclick = "erro()">Matuê</button>
+        <button class = "alternativastxt" onclick = "erro()">Veigh</button>
+        <button class  ="alternativastxt" onclick = "acerto()">Chefin</button>
+        <button class = "alternativastxt" onclick = "erro()">Oruam</button>
+    </div>
+</div>`,
+            `
+    <div class="perguntasquiz" id="perguntasquiz">
+    <div class="perguntas">
+        <h3>Trippie Red fez o hit "City of God" com qual trapper br?</h3>
+    </div>
+    <div class="alternativas">
+        <button class  ="alternativastxt" onclick = "acerto()">Orochi</button>
+        <button class = "alternativastxt" onclick = "erro()">Teto</button>
+        <button class = "alternativastxt" onclick = "erro()">Raffa Moreira</button>
+        <button class = "alternativastxt" onclick = "erro()">MVK</button>
+    </div>
+</div>`,
+            `
+    <div class="perguntasquiz" id="perguntasquiz">
+    <div class="perguntas">
+        <h3>Qual trapper não fez parte da gravadora Distrito 23?</h3>
+    </div>
+    <div class="alternativas">
+        <button class = "alternativastxt" onclick = "erro()">Chefin</button>
+        <button class  ="alternativastxt" onclick = "acerto()">Oruam</button>
+        <button class = "alternativastxt" onclick = "erro()">Cabelinho</button>
+        <button class = "alternativastxt" onclick = "erro()">Raffé</button>
+    </div>
+</div>`,
+            `
+    <div class="perguntasquiz" id="perguntasquiz">
+    <div class="perguntas">
+        <h3>Qual artista fundou a gravadora Bairro 13?</h3>
+    </div>
+    <div class="alternativas">
+        <button class = "alternativastxt" onclick = "erro()">Baco Exu do Blues</button>
+        <button class = "alternativastxt" onclick = "erro()">Borges</button>
+        <button class = "alternativastxt" onclick = "erro()">Veigh</button>
+        <button class  ="alternativastxt" onclick = "acerto()">Cabelinho</button>
+    </div>
+</div>`,
+            `
+    <div class="perguntasquiz" id="perguntasquiz">
+    <div class="perguntas">
+        <h3>Qual trapper possui um feat com o famoso artista americano Rich The Kid?</h3>
+    </div>
+    <div class="alternativas">
+        <button class = "alternativastxt" onclick = "erro()">Oruam</button>
+        <button class  ="alternativastxt" onclick = "acerto()">Matuê</button>
+        <button class = "alternativastxt" onclick = "erro()">Orochi</button>
+        <button class = "alternativastxt" onclick = "erro()">Teto</button>
+    </div>
+</div>`,
+            `
+    <div class="perguntasquiz" id="perguntasquiz">
+    <div class="perguntas">
+        <h3>Qual o artistas com mais músicas com 100 milhôes de views no youtube?</h3>
+    </div>
+    <div class="alternativas">
+        <button class = "alternativastxt" onclick = "erro()">Veigh</button>
+        <button class  ="alternativastxt" onclick = "acerto()">Matuê</button>
+        <button class = "alternativastxt" onclick = "erro()">Raffa Moreira</button>
+        <button class = "alternativastxt" onclick = "erro()">Jottapê</button>
+    </div>
+</div>`,
+
+        ]
+
+        quizIn.style.width = `100%`;
+
+        var max = listaPerguntas.length - 1
+        var aleatorio = parseInt(Math.random() * max)
+
+        if (perguntas_respondidas.indexOf(aleatorio) == -1) {
+            quizIn.innerHTML = `${listaPerguntas[aleatorio]}`
+            perguntas_respondidas.push(aleatorio)
+            console.log(aleatorio)
+        } else if (perguntas_respondidas.length + 1 == listaPerguntas.length) {
+            contarPontos()
+        } else {
+            perguntas()
+        }
+
+    }
+
+    function acerto() {
+        acertos++
+        perguntas()
+    }
+
+    function erro() {
+        erros++
+        perguntas()
+    }
+
+
+    function quiz() {
+
+        const totalTime = 55;
+
+        let remainingTime = totalTime;
+
+        const updateInterval = 1000;
+
+        const progressBar = document.querySelector('.progress-fill');
+
+        const intervalId = setInterval(() => {
+
+            remainingTime--;
+
+            const fillWidth = (remainingTime / totalTime) * 100;
+
+            progressBar.style.width = `${fillWidth}%`;
+
+            if (remainingTime <= 0) {
+                clearInterval(intervalId);
+                alert('Tempo esgotado!');
+                contarPontos()
+            }
+        }, updateInterval);
+
+    }
+
+    var segundos = 2;
+    var id = setInterval(() => {
+        segundos -= 1;
+        if (segundos <= 0) {
+            clearInterval(id);
+            perguntas()
+            quiz()
+        }
+    }, 1000);
+
+    function contarPontos() {
+        inserirDadosQuiz(acertos, erros)
+        quizAll.innerHTML = `<div class="contagemDePontos">
+        <div class="resumoPerguntas">
+            <div class="perguntasAcertos">
+                <h4>Você acertou</h4>
+                <span>${acertos}</span> 
+                <h4>Perguntas</h4>
+            </div>
+            <div class="perguntasErros">
+                <h4>Pontos</h4>
+                <span>${acertos * 100}</span> 
+             </div>
+        </div>
+
+          <div class="graficoEtxt">
+        <div class="graficoTxt">
+          <h4>Resumo</h4>
+        </div>
+        <div class="grafico">
+            <canvas id="graficoPizza"></canvas>
+        </div>
+    </div>
+  </div>
+    `
+
+        const graficoPizza = document.getElementById("graficoPizza");
+
+        var dados = {
+            labels: ["Respostas"],
+            datasets: [
+                {
+                    label: "Acertos",
+                    data: [acertos],
+                    backgroundColor: ["green"],
+                    borderWidth: 0
+                },
+                {
+                    label: "Erros",
+                    data: [erros],
+                    backgroundColor: ["red"],
+                    borderWidth: 0
+                }
+
+            ]
+        };
+
+        var opcoes = {
+            type: 'bar',
+            data: dados,
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false,
+                    labels: {
+                        font: {
+                            size: 13
+                        },
+                        color: "white"
+                    },
+                    position: "top"
+                }
+            },
+            scales: {
+                yAxes: [
+                    {
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }
+                ]
+            }
+        };
+
+        var grafico = new Chart(graficoPizza, opcoes);
+
+    }
+
+</script>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrapVibeZ | Noticias</title>
+    <link rel="stylesheet" href="./css/trapvibez.css">
+    <link rel="icon" href="./assets/logo.png">
+    <script src="./js/funcoes.js"></script>
+</head>
+
+<body onload="validarSessao()">
+
+    <div class="header">
+
+        <div class="logo">
+            <img src="./assets/letreiro.png" alt="">
+        </div>
+
+        <div class="nav">
+            <a href="home.html">Home</a>
+            <a href="noticias.html">Notícias</a>
+            <a href="quizhome.html">Quiz</a>
+            <a href="historia.html" id="active">História</a>
+            <a href="sobremim.html">Autor</a>
+        </div>
+
+        <div class="icons">
+            <a href="https://open.spotify.com/user/31ugctz6pgp6jfdixccnqrd3ul3i"><img src="./assets/spotify.png"
+                    alt=""></a>
+            <a href="https://github.com/KauaLealz/TrapVibez-Projeto-Individual-"><img src="./assets/github.png"
+                    alt=""></a>
+            <a onclick="abrirPerfil()"><img src="./assets/user.png" alt=""></a>
+        </div>
+    </div>
+
+    <h4 class="tituloSM">História do Trap no Brasil</h4>
+
+    <div class="historia">
+
+        <div class="SMContainer">
+            <div class="SM">
+                <div class="imgHistoria">
+                    <img src="./assets/raff.jpeg" alt="" class="imgSM">
+                    <div class="divisora2"></div>
+                    <img src="./assets/tue.jpg" alt="" class="imgSM">
+                    <div class="divisora2"></div>
+                    <img src="./assets/kyan.jpg" alt="" class="imgSM">
+                    <div class="divisora2"></div>
+                    <img src="./assets/derek.jpg" alt="" class="imgSM">
+                </div>
+
+                <div class="textoSM">
+                    <p>O gênero de música Trap surgiu no começo dos anos 2000 como um subgênero do Rap, seu berço é
+                        localizado no sul dos EUA, mais especificamente Atalanta. A palavra “Trap” é uma gíria americana
+                        usada para designar localidades perigosas, geralmente periferias que sofrem com a desigualdade
+                        social e estão cercadas por gangues. É em meio a este ambiente que surgem as letras do Trap,
+                        relatando a realidade vivida por estas localidades, assuntos como política e direitos humanos
+                        são semelhantes ao estilo do Rap, porém o Trap também acrescenta uma pegada mais agressiva, como
+                        se fosse um estilo Punk se comparado ao Rock, por retratar também sobre drogas, sexo, crimes e
+                        violência.</p>
+
+                    <p>O novo estilo de música derivado do Rap surgiu no Brasil por volta de 2014, artistas como Naio
+                        Rezende e Raffa Moreira disputam de forma saudável o título de pioneiros do Trap no País. Mas
+                        sendo sincero, pouco importa a origem do estilo musical, a verdade é que nos últimos anos o povo
+                        brasileiro ganhou muito com os sons de Trap e os excelentes artistas que tem aparecido em nosso
+                        País.</p>
+
+                    <p>Mas foi a partir de 2017 que o trap brasileiro realmente explodiu, graças ao sucesso de artistas
+                        como
+                        Raffa Moreira e Matuê. Raffa Moreira, também conhecido como "Young Raff", é um dos principais
+                        nomes
+                        do trap brasileiro e é considerado um dos pioneiros do movimento. Ele começou a produzir música
+                        em
+                        2012 e, aos poucos, foi conquistando espaço na cena underground do rap nacional, e foi ai que
+                        diversos artistas começaram a surgir na cena do trap no Brasil, porém agora inovando o que tinha
+                        sido criado em atlanta a anos atrás e trazendo o ritmo brasileiro a esse estilo tão inovador.
+                    </p>
+
+                    <p>Hoje, o trap brasileiro é um dos gêneros mais populares do rap nacional, com uma cena vibrante e
+                        diversa que conta com artistas de todos os cantos do país. O som do trap brasileiro é
+                        caracterizado
+                        por batidas pesadas, letras ousadas e uma mistura única de influências nacionais e
+                        internacionais. E
+                        com artistas como Raffa Moreira e Matuê liderando o movimento, o futuro do trap brasileiro
+                        parece
+                        mais promissor do que nunca.</p>
+                    <p>Segundo dados da plataforma de música Spotify Brasil, desde 2016 até o começo de 2022 o Trap
+                        cresceu em média 61% ao ano, consumida principalmente pela juventude brasileira e contando com
+                        inúmeros Hits próprios que vão muito além de apenas curtição, mas sim um estilo de vida e um
+                        viés político que já não mais pode ser chamado como o futuro da música, mas sim o presente por
+                        já estar influenciando e tocando em todos os cantos do País. </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="perfilUser" id="perfilUser">
+        <div class="conteudo-bloco-flutuante">
+            <div class="infUser">
+                <div class="nomeUser">Olá, <span id="nome_saudacao">Kauã</span></div>
+            </div>
+            <div class="options">
+                <a href="profileAnalytics.html#contagemDePontos">Estatísticas</a>
+                <a href="login.html" onclick="sessionStorage.clear()">Fazer logout</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <h4>CopyRight @ TrapVibez 2023</h4>
+    </div>
+
+</body>
+
+</html>
