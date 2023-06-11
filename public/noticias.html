@@ -112,7 +112,7 @@ fetch("/usuarios/postar-noticia", {
 
     if (resposta.ok) {
       alert("Noticia Postada")
-
+      window.location = `noticias.html`
     } else {
 
         alert("Houve um erro ao inserir dados!");
@@ -124,7 +124,6 @@ fetch("/usuarios/postar-noticia", {
 
 return false;
 }
-
 
 function obterNoticias(){
 

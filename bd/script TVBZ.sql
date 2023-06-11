@@ -7,6 +7,7 @@ email varchar(50),
 senha varchar(100)
 );
 
+
 create table quiz(
 idQuiz int primary key auto_increment,
 acertos int,

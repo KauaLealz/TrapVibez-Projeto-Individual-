@@ -478,6 +478,17 @@ h3 {
     text-align: center;
 }
 
+#iniciar:hover{
+    color: #E60000;
+    background-color: white;
+    border: solid 2px #E60000;
+    border-radius: 25px;
+    height: 7%;
+    width: 14%;
+    padding: 8px;
+    text-align: center;
+}
+
 .quiz img {
     width: 150px;
     height: 150px;
@@ -700,6 +711,7 @@ h3 {
     height: fit-content;
     padding: 20px;
     width: 95%;
+    margin-right: 25px;
     align-items: center;
     justify-content: space-between;
     margin-top: 150px;
@@ -1019,17 +1031,19 @@ h3 {
     border-radius: 20px;
     border: none;
     outline: none;
-    padding: 15px 0 0 15px;
+    padding: 8px 0 0 8px;
     margin-bottom:  20px;
 }
 
 #img_noticia{
     border-radius: 20px;
     border: none;
+    padding: 4px 0 4px 8px;
     margin-bottom:  20px;
 }
 
 #link_noticia{
+    padding: 4px 0 4px 8px;
     border: none;
     width: 82%;
     border-radius: 20px;
@@ -1046,5 +1060,16 @@ h3 {
     margin-left: 10px;
     border: none;
     cursor: pointer;
-    height: 24px;
+    height: 28px;
+}
+
+.buttonLink button:hover{
+    color: #E60000;
+    background-color: white;
+    border: solid 2px #E60000;
+    border-radius: 20px;
+    width: 15%;
+    margin-left: 10px;
+    cursor: pointer;
+    height: 28px;
 }
