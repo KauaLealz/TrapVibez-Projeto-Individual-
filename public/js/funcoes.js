@@ -14,7 +14,7 @@ function validarSessao() {
 
         // finalizarAguardar();
     } else {
-        window.location = "login.html";
+        window.location = "./public/login.html";
     }
 }
 
@@ -22,7 +22,7 @@ function limparSessao() {
     // aguardar();
     sessionStorage.clear();
     // finalizarAguardar();
-    window.location = "login.html";
+    window.location = "./public/login.html";
 }
 
 function abrirPerfil() {
